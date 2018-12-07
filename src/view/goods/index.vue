@@ -268,16 +268,22 @@ export default {
 
         if(this.from.districtCode == ''){
             Toast.fail('所在区域不能为空');
+            return
         }else if(this.from.type == ''){
             Toast.fail('投诉类型不能为空');
+            return
         }else if(this.from.complainReason == ''){
             Toast.fail('请填写投诉原因');
+            return
         }else if(this.from.userName == ''){
             Toast.fail('用户名不能为空');
-        }else if(this.from.telephone == ''){
-            Toast.fail('手机号不能为空');
+            return
+        }else if(!(/^[1][3,4,5,6,7,8][0-9]{9}$/.test(this.from.telephone))){
+            Toast.fail('请输入正确手机号');
+            return
         }else if(this.from.code == ''){
             Toast.fail('验证码不能为空');
+            return
         }
         this.show1 =true
 

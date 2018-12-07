@@ -81,7 +81,11 @@ export default {
           e.createDate = date.toLocaleDateString().replace(/\//g, "-") + " " + date.toTimeString().substr(0, 8);
           return e
         });
-        console.log(this.list)
+        if(res.data.content.complaintsList.length<1){
+          Toast.success('暂无投诉记录');
+        }
+        
+        console.log(this.list,"222")
       })
     },
     onClickResult(item){
