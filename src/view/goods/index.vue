@@ -80,7 +80,7 @@
                 
             </div>
             <div class="btnBox">
-                <div @click="showTips()"  :class="isSubmit?'':'isOK'" class="nextBtn">下一步</div>
+                <div @click="showTips()"  :class="isSubmit?'':'isOK'" class="nextBtn">确认提交</div>
                 <div @click="onClickSearch" class="serchBtn">投诉结果查询</div>
             </div>
         </div>
@@ -281,8 +281,8 @@ export default {
         }else if(!(/^[1][3,4,5,6,7,8][0-9]{9}$/.test(this.from.telephone))){
             Toast.fail('请输入正确手机号');
             return
-        }else if(this.from.code == ''){
-            Toast.fail('验证码不能为空');
+        }else if(!(/^\d{6}$/).test(this.from.code)){
+            Toast.fail('请输入正确的验证码');
             return
         }
         this.show1 =true
@@ -304,6 +304,16 @@ export default {
         });
         axios.post('/openapi/v2/app/complaints/submit',JSON.stringify(this.from)).then(res => {
             console.log(res)
+
+            if(res.data.content.status == '02' ){
+                alert(1)
+                Toast.clear();
+                Toast.fail('手机验证码错误');
+                
+                return
+            }
+
+            alert(2)
             Toast.clear();
             Toast.success('提交成功');
             sessionStorage.setItem("phone",this.from.telephone);
@@ -346,6 +356,9 @@ export default {
                 this.second = this.second-1;
                 console.log(this.second)
             },1000);
+
+        }else{
+            Toast.fail('请输入手机号');
 
         }
         

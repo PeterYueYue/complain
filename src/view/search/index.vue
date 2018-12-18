@@ -97,7 +97,7 @@ export default {
       this.$router.push({
           path: goWhere,
           query: {
-            item:item
+            item:JSON.stringify(item)
           }
         })
 
@@ -153,6 +153,7 @@ export default {
     border-color:#E2E2E3;
   }
   .list{
+    background-color: #f5f5f9;
     text-align: left;
     .items{
       background-color: #fff;

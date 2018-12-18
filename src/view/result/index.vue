@@ -6,19 +6,19 @@
     </div>
     <div class="time">
       <div>处理时间</div>
-      <div>{{info.resultDate}}</div>
+      <div>{{info.result_data}}</div>
     </div>
     <div class="message">
       <div class="title">投诉信息</div>
       <div class="main">
-        <div>投诉时间：{{info.createDate}}</div>
+        <div>投诉时间：{{info.create_data}}</div>
         <div>投诉类型：{{info.type}}</div>
-        <div>所属行政区：{{info.districtName}}</div>
-        <div>投诉原因：{{info.complainReason}}</div>
+        <div>所属行政区：{{info.district_name}}</div>
+        <div>投诉原因：{{info.complain_reason}}</div>
       </div>
       
       <div class="imgBox">
-        <img  v-for="item in imgs" :key="item.id" @click="preview()" :src="item" alt="">
+        <img  v-for="(item,index) in imgs" :key="item.id" @click="preview(index)" :src="item" alt="">
         
       </div>
 
@@ -44,31 +44,28 @@ export default {
   data(){
     return{
       info:'',
-      imgs:[]
+      imgs:[],
+      item:''
 
     }
   },
   mounted(){
-
+    this.item = JSON.parse(this.$route.query.item)
     this.getDtails();
   },
   methods:{
-    preview(){
+    preview(index){
       ImagePreview({
         images:this.imgs,
-        showIndex:false
+        showIndex:index,
+        startPosition: index,
       });
 
     },
     getDtails(){
-      axios.post('/openapi/v2/app/complaints/getDetailBycomplaintsCode',{"complaintCode":this.$route.query.item.complaintCode}).then(res => {
+      axios.post('/openapi/v2/app/complaints/getDetailBycomplaintsCode',{"complaintCode":this.item.complaintCode}).then(res => {
         this.info = res.data.content.userts;
-        console.log(this.info,"666")
         this.imgs = res.data.content.pictures;
-        var date = new Date(this.info.resultDate);
-        var date1 = new Date(this.info.createDate);
-        this.info.resultDate = date.toLocaleDateString().replace(/\//g, "-") ;
-        this.info.createDate = date1.toLocaleDateString().replace(/\//g, "-") + " " + date.toTimeString().substr(0, 8);
         
       })
 

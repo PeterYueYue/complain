@@ -26,7 +26,7 @@ const routes = [
     name: 'goods',
     component: () => import('./view/goods'),
     meta: {
-      title: '投诉建议'
+      title: '环保举报'
     }
   },
   {
