@@ -113,6 +113,9 @@ export default {
     .main{
       font-size: 15px;
       color: #666666;
+      word-break:break-all;
+      
+
     }
     .imgBox{
       display: flex;
